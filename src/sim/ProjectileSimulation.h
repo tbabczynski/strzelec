@@ -22,6 +22,17 @@ public:
     void Launch(float speed, float angleDeg);
     void SetWind(const glm::vec2& wind);
     void SetTarget(const glm::vec2& pos, float radius);
+
+    void SetInitialSpeed(float m_initial_speed)
+    {
+	    this->m_InitialSpeed = m_initial_speed;
+    }
+
+    void SetInitialAngle(float m_initial_angle)
+    {
+	    this->m_InitialAngle = m_initial_angle;
+    }
+
     void RequestStep();
     void SetPaused(bool paused);
     bool GetPaused() const { return m_Paused; }

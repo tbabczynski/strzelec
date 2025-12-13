@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "glm/vec2.hpp"
+
 GUILayer::GUILayer()
     : m_Window(nullptr)
 {
@@ -83,8 +85,10 @@ void GUILayer::Render(SimulationManager* simManager)
             ImGui::Text("Launch Parameters:");
             float speed = projectileSim->GetInitialSpeed();
             float angle = projectileSim->GetInitialAngle();
-            ImGui::SliderFloat("Speed (m/s)", &speed, 10.0f, 100.0f);
-            ImGui::SliderFloat("Angle (deg)", &angle, 0.0f, 90.0f);
+            if (ImGui::SliderFloat("Speed (m/s)", &speed, 10.0f, 100.0f))
+                projectileSim->SetInitialSpeed(speed);
+            if (ImGui::SliderFloat("Angle (deg)", &angle, 0.0f, 90.0f))
+                projectileSim->SetInitialAngle(angle);
 
             // Target configuration
             ImGui::Spacing();
@@ -102,8 +106,8 @@ void GUILayer::Render(SimulationManager* simManager)
             ImGui::Spacing();
             ImGui::Text("Wind Configuration:");
             glm::vec2 wind = projectileSim->GetWind();
-            if (ImGui::SliderFloat("Wind X (m/s)", &wind.x, -10.0f, 10.0f) ||
-                ImGui::SliderFloat("Wind Y (m/s)", &wind.y, -5.0f, 5.0f))
+            if (ImGui::SliderFloat("Wind X (m/s)", &wind.x, -100.0f, 100.0f) ||
+                ImGui::SliderFloat("Wind Y (m/s)", &wind.y, -100.0f, 100.0f))
             {
                 projectileSim->SetWind(wind);
             }
