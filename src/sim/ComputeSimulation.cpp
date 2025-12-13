@@ -81,6 +81,10 @@ void ComputeSimulation::CreateTextures(int width, int height)
 
 void ComputeSimulation::DestroyTextures()
 {
+    // Reset pointers before deleting textures to avoid dangling pointers
+    m_SrcTex = 0;
+    m_DstTex = 0;
+
     if (m_TexA != 0)
     {
         glDeleteTextures(1, &m_TexA);
@@ -91,8 +95,6 @@ void ComputeSimulation::DestroyTextures()
         glDeleteTextures(1, &m_TexB);
         m_TexB = 0;
     }
-    m_SrcTex = 0;
-    m_DstTex = 0;
 }
 
 void ComputeSimulation::Init()

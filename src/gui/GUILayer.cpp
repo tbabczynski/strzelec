@@ -77,7 +77,7 @@ void GUILayer::Render(SimulationManager* simManager)
         
         if (activeSim && computeSim)
         {
-            // Texture preview
+            // Texture preview (512x512 fixed size for consistent UI layout)
             ImGui::Text("Simulation Texture:");
             unsigned int simTexture = computeSim->GetTexture();
             ImGui::Image((ImTextureID)(intptr_t)simTexture, ImVec2(512, 512), ImVec2(0, 1), ImVec2(1, 0));

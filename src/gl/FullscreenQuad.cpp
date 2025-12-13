@@ -51,17 +51,17 @@ bool FullscreenQuad::Init()
 
 void FullscreenQuad::Draw(unsigned int texId, std::shared_ptr<Shader> displayShader)
 {
-    if (displayShader)
-    {
-        displayShader->Use();
-        
-        // Bind texture to unit 0
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texId);
-        
-        // Set uniform
-        displayShader->SetInt("uTexture", 0);
-    }
+    if (!displayShader)
+        return;
+
+    displayShader->Use();
+    
+    // Bind texture to unit 0
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texId);
+    
+    // Set uniform
+    displayShader->SetInt("uTexture", 0);
 
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
