@@ -1,0 +1,54 @@
+# Visual Studio 2022
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Build outputs
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.obj
+*.iobj
+*.ipdb
+*.idb
+*.lib
+*.exp
+
+# vcpkg installed
+vcpkg_installed/
+build/
+installed/
+
+# Misc
+*.log
+*.tlog
+*.lastbuildstate
+*.unsuccessfulbuild
