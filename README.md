@@ -7,6 +7,11 @@ Visual Studio 2022 skeleton project for OpenGL 4.6 + ImGui + compute-shader simu
 - OpenGL 4.6 Core Profile
 - ImGui with docking and viewports
 - Modular architecture (Application, Window, GL helpers, Simulation, GUI)
+- CPU-based projectile (archery) simulation with physics
+  - Semi-implicit Euler integration
+  - Gravity, aerodynamic drag, and wind effects
+  - Target collision detection
+  - Real-time trajectory visualization
 - Compute shader-based simulation example (2D diffusion)
 - GLSL shaders loaded from separate files
 - vcpkg dependency management
@@ -48,29 +53,30 @@ Visual Studio 2022 skeleton project for OpenGL 4.6 + ImGui + compute-shader simu
 
 ```
 strzelec/
-├── vcpkg.json                      # Dependency manifest
-├── README.md                       # This file
-├── .gitignore                      # VS and build artifacts
-├── strzelec.sln                    # VS2022 solution
+├── vcpkg.json                         # Dependency manifest
+├── README.md                          # This file
+├── .gitignore                         # VS and build artifacts
+├── strzelec.sln                       # VS2022 solution
 ├── src/
-│   ├── strzelec.vcxproj            # VS2022 project file
-│   ├── main.cpp                    # Entry point
-│   ├── Application.h/cpp           # Main orchestrator
-│   ├── Window.h/cpp                # GLFW + OpenGL wrapper
+│   ├── strzelec.vcxproj               # VS2022 project file
+│   ├── main.cpp                       # Entry point
+│   ├── Application.h/cpp              # Main orchestrator + rendering
+│   ├── Window.h/cpp                   # GLFW + OpenGL wrapper
 │   ├── gl/
-│   │   ├── Shader.h/cpp            # Shader loader/compiler
-│   │   ├── GLBuffer.h/cpp          # VBO/SSBO wrapper
-│   │   └── Framebuffer.h/cpp       # FBO wrapper
+│   │   ├── Shader.h/cpp               # Shader loader/compiler
+│   │   ├── GLBuffer.h/cpp             # VBO/SSBO wrapper
+│   │   └── Framebuffer.h/cpp          # FBO wrapper
 │   ├── sim/
-│   │   ├── ISimulation.h           # Simulation interface
-│   │   ├── ComputeSimulation.h/cpp # Compute shader simulation
-│   │   └── SimulationManager.h/cpp # Simulation container
+│   │   ├── ISimulation.h              # Simulation interface
+│   │   ├── ProjectileSimulation.h/cpp # CPU-based projectile physics
+│   │   ├── ComputeSimulation.h/cpp    # Compute shader simulation
+│   │   └── SimulationManager.h/cpp    # Simulation container
 │   └── gui/
-│       └── GUILayer.h/cpp          # ImGui wrapper
+│       └── GUILayer.h/cpp             # ImGui wrapper + controls
 └── shaders/
-    ├── fullscreen_quad.vert.glsl   # Fullscreen quad vertex shader
-    ├── display.frag.glsl           # Display fragment shader
-    └── compute_diffusion.comp.glsl # Compute shader example
+    ├── fullscreen_quad.vert.glsl      # Fullscreen quad vertex shader
+    ├── display.frag.glsl              # Display fragment shader
+    └── compute_diffusion.comp.glsl    # Compute shader example
 ```
 
 ## Technical Notes
@@ -86,11 +92,37 @@ strzelec/
 The application demonstrates:
 - A window management system (GLFW wrapper)
 - Shader compilation and loading from files
+- A CPU-based projectile (archery) simulation with realistic physics
+  - **Launch Parameters**: Adjust speed (10-100 m/s) and angle (0-90 degrees)
+  - **Target Configuration**: Set target position (X, Y in meters) and radius
+  - **Wind Effects**: Configure wind speed in X and Y directions
+  - **Controls**: Launch, Reset, Pause, and Step-through simulation
+  - **Visualization**: Toggle trajectory display, see real-time arrow position and target
+  - **Status Display**: Shows flight time, position, velocity, and hit detection
 - A compute shader-based 2D diffusion simulation
-- ImGui controls to adjust simulation parameters (timestep slider)
+- ImGui controls to adjust simulation parameters
 - Modular design for easy extension
 
-Modify `src/sim/ComputeSimulation.cpp` and `shaders/compute_diffusion.comp.glsl` to implement your own simulations.
+### Projectile Simulation Details
+
+The projectile simulation uses realistic physics:
+- **Mass**: 0.02 kg (20 grams, typical arrow mass)
+- **Drag Coefficient**: 0.3
+- **Cross-sectional Area**: π × (0.0035 m)² (7mm diameter arrow)
+- **Air Density**: 1.225 kg/m³ (sea level)
+- **Gravity**: 9.80665 m/s²
+- **Integration**: Semi-implicit Euler with 4 sub-steps per frame for stability
+
+Default parameters:
+- Initial position: (0, 1.5) m above ground
+- Default launch speed: 50 m/s
+- Default launch angle: 25 degrees
+- Target position: (30, 1.5) m
+- Target radius: 0.5 m
+- Wind: (0, 0) m/s (no wind)
+
+Modify `src/sim/ProjectileSimulation.cpp` to adjust physics parameters or add new features.
+Modify `src/sim/ComputeSimulation.cpp` and `shaders/compute_diffusion.comp.glsl` to implement other simulations.
 
 ## Troubleshooting
 

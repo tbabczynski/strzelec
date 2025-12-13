@@ -1,6 +1,7 @@
 #include "SimulationManager.h"
 #include "ISimulation.h"
 #include "ComputeSimulation.h"
+#include "ProjectileSimulation.h"
 #include <iostream>
 
 SimulationManager::SimulationManager()
@@ -14,6 +15,11 @@ SimulationManager::~SimulationManager()
 
 void SimulationManager::Init()
 {
+    // Create and initialize projectile simulation (default active)
+    auto projectileSim = std::make_unique<ProjectileSimulation>();
+    projectileSim->Init();
+    m_Simulations.push_back(std::move(projectileSim));
+
     // Create and initialize compute simulation
     auto computeSim = std::make_unique<ComputeSimulation>();
     computeSim->Init();

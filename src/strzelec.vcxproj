@@ -98,6 +98,7 @@
     <ClCompile Include="gl\GLBuffer.cpp" />
     <ClCompile Include="gl\Framebuffer.cpp" />
     <ClCompile Include="sim\ComputeSimulation.cpp" />
+    <ClCompile Include="sim\ProjectileSimulation.cpp" />
     <ClCompile Include="sim\SimulationManager.cpp" />
     <ClCompile Include="gui\GUILayer.cpp" />
   </ItemGroup>
@@ -109,6 +110,7 @@
     <ClInclude Include="gl\Framebuffer.h" />
     <ClInclude Include="sim\ISimulation.h" />
     <ClInclude Include="sim\ComputeSimulation.h" />
+    <ClInclude Include="sim\ProjectileSimulation.h" />
     <ClInclude Include="sim\SimulationManager.h" />
     <ClInclude Include="gui\GUILayer.h" />
   </ItemGroup>

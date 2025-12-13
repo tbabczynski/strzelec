@@ -28,12 +28,18 @@
     <ClCompile Include="sim\SimulationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sim\ProjectileSimulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sim\ComputeSimulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\ProjectileSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl\Framebuffer.h">
