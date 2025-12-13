@@ -1,6 +1,7 @@
 #include "GUILayer.h"
 #include "../sim/SimulationManager.h"
 #include "../sim/ISimulation.h"
+#include "../sim/ComputeSimulation.h"
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -72,18 +73,43 @@ void GUILayer::Render(SimulationManager* simManager)
     if (simManager)
     {
         ISimulation* activeSim = simManager->GetActiveSimulation();
-        if (activeSim)
+        ComputeSimulation* computeSim = dynamic_cast<ComputeSimulation*>(activeSim);
+        
+        if (activeSim && computeSim)
         {
+            // Texture preview
+            ImGui::Text("Simulation Texture:");
+            unsigned int simTexture = computeSim->GetTexture();
+            ImGui::Image((ImTextureID)(intptr_t)simTexture, ImVec2(512, 512), ImVec2(0, 1), ImVec2(1, 0));
+            
+            ImGui::Separator();
+            
+            // TimeStep control
             float timeStep = activeSim->GetTimeStep();
-            if (ImGui::VSliderFloat("##TimeStep", ImVec2(40, 160), &timeStep, 0.001f, 0.1f, "%.3f"))
+            if (ImGui::SliderFloat("Time Step", &timeStep, 0.001f, 0.1f, "%.4f"))
             {
                 activeSim->SetTimeStep(timeStep);
             }
-            ImGui::SameLine();
-            ImGui::Text("Time Step");
 
-            ImGui::Spacing();
-            ImGui::Text("Current timestep: %.4f", timeStep);
+            ImGui::Separator();
+            
+            // Width and Height controls
+            static int newWidth = 256;
+            static int newHeight = 256;
+            
+            ImGui::InputInt("Width", &newWidth);
+            ImGui::InputInt("Height", &newHeight);
+            
+            if (ImGui::Button("Apply Size"))
+            {
+                if (newWidth > 0 && newHeight > 0)
+                {
+                    activeSim->Resize(newWidth, newHeight);
+                }
+            }
+            
+            ImGui::Separator();
+            ImGui::Text("Note: Pause/Step controls not yet implemented");
         }
         else
         {
