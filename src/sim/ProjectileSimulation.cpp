@@ -159,8 +159,13 @@ void ProjectileSimulation::UpdatePhysics(float dt)
 
     m_SimTime += dt;
 
-    // Record trajectory point (sample every substep to get smooth trajectory)
-    m_Trajectory.push_back(m_Position);
+    // Record trajectory point (limit to avoid excessive memory usage)
+    // Sample every substep but cap at a reasonable size
+    const size_t maxTrajectoryPoints = 10000;
+    if (m_Trajectory.size() < maxTrajectoryPoints)
+    {
+        m_Trajectory.push_back(m_Position);
+    }
 
     // Check collisions
     if (CheckGroundCollision())

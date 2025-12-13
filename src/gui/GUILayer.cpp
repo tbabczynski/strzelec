@@ -81,33 +81,31 @@ void GUILayer::Render(SimulationManager* simManager)
 
             // Launch parameters
             ImGui::Text("Launch Parameters:");
-            static float speed = 50.0f;
-            static float angle = 25.0f;
+            float speed = projectileSim->GetInitialSpeed();
+            float angle = projectileSim->GetInitialAngle();
             ImGui::SliderFloat("Speed (m/s)", &speed, 10.0f, 100.0f);
             ImGui::SliderFloat("Angle (deg)", &angle, 0.0f, 90.0f);
 
             // Target configuration
             ImGui::Spacing();
             ImGui::Text("Target Configuration:");
-            static float targetX = 30.0f;
-            static float targetY = 1.5f;
-            static float targetRadius = 0.5f;
-            if (ImGui::InputFloat("Target X (m)", &targetX) ||
-                ImGui::InputFloat("Target Y (m)", &targetY) ||
+            glm::vec2 targetPos = projectileSim->GetTargetPosition();
+            float targetRadius = projectileSim->GetTargetRadius();
+            if (ImGui::InputFloat("Target X (m)", &targetPos.x) ||
+                ImGui::InputFloat("Target Y (m)", &targetPos.y) ||
                 ImGui::SliderFloat("Target Radius (m)", &targetRadius, 0.1f, 2.0f))
             {
-                projectileSim->SetTarget(glm::vec2(targetX, targetY), targetRadius);
+                projectileSim->SetTarget(targetPos, targetRadius);
             }
 
             // Wind configuration
             ImGui::Spacing();
             ImGui::Text("Wind Configuration:");
-            static float windX = 0.0f;
-            static float windY = 0.0f;
-            if (ImGui::SliderFloat("Wind X (m/s)", &windX, -10.0f, 10.0f) ||
-                ImGui::SliderFloat("Wind Y (m/s)", &windY, -5.0f, 5.0f))
+            glm::vec2 wind = projectileSim->GetWind();
+            if (ImGui::SliderFloat("Wind X (m/s)", &wind.x, -10.0f, 10.0f) ||
+                ImGui::SliderFloat("Wind Y (m/s)", &wind.y, -5.0f, 5.0f))
             {
-                projectileSim->SetWind(glm::vec2(windX, windY));
+                projectileSim->SetWind(wind);
             }
 
             // Control buttons
@@ -125,7 +123,7 @@ void GUILayer::Render(SimulationManager* simManager)
 
             // Pause/Step controls
             ImGui::Spacing();
-            static bool paused = false;
+            bool paused = projectileSim->GetPaused();
             if (ImGui::Checkbox("Paused", &paused))
             {
                 projectileSim->SetPaused(paused);

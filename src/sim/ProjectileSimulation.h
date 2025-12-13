@@ -24,6 +24,7 @@ public:
     void SetTarget(const glm::vec2& pos, float radius);
     void RequestStep();
     void SetPaused(bool paused);
+    bool GetPaused() const { return m_Paused; }
     void Reset();
 
     // Getters

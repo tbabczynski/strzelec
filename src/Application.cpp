@@ -125,6 +125,8 @@ void Application::InitRenderingResources()
         char infoLog[512];
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::cerr << "Vertex shader compilation failed:\n" << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        return;
     }
 
     // Compile fragment shader
@@ -138,6 +140,9 @@ void Application::InitRenderingResources()
         char infoLog[512];
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cerr << "Fragment shader compilation failed:\n" << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        return;
     }
 
     // Link shaders
@@ -152,6 +157,11 @@ void Application::InitRenderingResources()
         char infoLog[512];
         glGetProgramInfoLog(m_SimpleShaderProgram, 512, nullptr, infoLog);
         std::cerr << "Shader program linking failed:\n" << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(m_SimpleShaderProgram);
+        m_SimpleShaderProgram = 0;
+        return;
     }
 
     glDeleteShader(vertexShader);
