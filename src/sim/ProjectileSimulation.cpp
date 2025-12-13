@@ -24,6 +24,7 @@ ProjectileSimulation::ProjectileSimulation()
     , m_StepRequested(false)
     , m_InitialSpeed(50.0f)
     , m_InitialAngle(25.0f)
+    , m_ShowTrajectory(true)
 {
 }
 

@@ -276,25 +276,28 @@ void Application::RenderProjectileScene()
         glDrawArrays(GL_LINE_LOOP, 0, segments + 1);
     }
     
-    // Draw trajectory
-    const auto& trajectory = projectileSim->GetTrajectory();
-    if (trajectory.size() > 1)
+    // Draw trajectory (if enabled)
+    if (projectileSim->GetShowTrajectory())
     {
-        std::vector<float> trajVertices;
-        for (const auto& point : trajectory)
+        const auto& trajectory = projectileSim->GetTrajectory();
+        if (trajectory.size() > 1)
         {
-            glm::vec2 screenPos = worldToScreen(point);
-            trajVertices.push_back(screenPos.x);
-            trajVertices.push_back(screenPos.y);
+            std::vector<float> trajVertices;
+            for (const auto& point : trajectory)
+            {
+                glm::vec2 screenPos = worldToScreen(point);
+                trajVertices.push_back(screenPos.x);
+                trajVertices.push_back(screenPos.y);
+            }
+            
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+            glBufferData(GL_ARRAY_BUFFER, trajVertices.size() * sizeof(float), trajVertices.data(), GL_DYNAMIC_DRAW);
+            
+            int colorLoc = glGetUniformLocation(m_SimpleShaderProgram, "uColor");
+            glUniform3f(colorLoc, 0.5f, 0.5f, 1.0f);  // Light blue
+            
+            glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(trajectory.size()));
         }
-        
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-        glBufferData(GL_ARRAY_BUFFER, trajVertices.size() * sizeof(float), trajVertices.data(), GL_DYNAMIC_DRAW);
-        
-        int colorLoc = glGetUniformLocation(m_SimpleShaderProgram, "uColor");
-        glUniform3f(colorLoc, 0.5f, 0.5f, 1.0f);  // Light blue
-        
-        glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(trajectory.size()));
     }
     
     // Draw arrow

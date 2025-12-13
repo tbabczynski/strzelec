@@ -44,6 +44,10 @@ public:
     float GetInitialAngle() const { return m_InitialAngle; }
     glm::vec2 GetWind() const { return m_Wind; }
 
+    // Rendering options
+    void SetShowTrajectory(bool show) { m_ShowTrajectory = show; }
+    bool GetShowTrajectory() const { return m_ShowTrajectory; }
+
 private:
     void UpdatePhysics(float dt);
     bool CheckGroundCollision();
@@ -81,4 +85,7 @@ private:
 
     // Trajectory history
     std::vector<glm::vec2> m_Trajectory;
+
+    // Rendering options
+    bool m_ShowTrajectory;
 };

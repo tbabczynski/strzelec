@@ -137,8 +137,11 @@ void GUILayer::Render(SimulationManager* simManager)
             }
 
             // Trajectory toggle
-            static bool showTrajectory = true;
-            ImGui::Checkbox("Show Trajectory", &showTrajectory);
+            bool showTrajectory = projectileSim->GetShowTrajectory();
+            if (ImGui::Checkbox("Show Trajectory", &showTrajectory))
+            {
+                projectileSim->SetShowTrajectory(showTrajectory);
+            }
 
             // Status display
             ImGui::Spacing();
