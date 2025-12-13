@@ -157,13 +157,14 @@ void Application::InitRenderingResources()
         char infoLog[512];
         glGetProgramInfoLog(m_SimpleShaderProgram, 512, nullptr, infoLog);
         std::cerr << "Shader program linking failed:\n" << infoLog << std::endl;
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
         glDeleteProgram(m_SimpleShaderProgram);
         m_SimpleShaderProgram = 0;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
         return;
     }
 
+    // Shaders are now linked into the program and can be deleted
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
