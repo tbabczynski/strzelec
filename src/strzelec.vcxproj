@@ -53,6 +53,9 @@
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -110,9 +113,9 @@
     <ClInclude Include="gui\GUILayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\shaders\fullscreen_quad.vert.glsl" />
-    <None Include="..\shaders\display.frag.glsl" />
-    <None Include="..\shaders\compute_diffusion.comp.glsl" />
+    <None Include="shaders\compute_diffusion.comp.glsl" />
+    <None Include="shaders\display.frag.glsl" />
+    <None Include="shaders\fullscreen_quad.vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
