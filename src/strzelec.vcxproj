@@ -97,6 +97,7 @@
     <ClCompile Include="gl\Shader.cpp" />
     <ClCompile Include="gl\GLBuffer.cpp" />
     <ClCompile Include="gl\Framebuffer.cpp" />
+    <ClCompile Include="gl\FullscreenQuad.cpp" />
     <ClCompile Include="sim\ComputeSimulation.cpp" />
     <ClCompile Include="sim\SimulationManager.cpp" />
     <ClCompile Include="gui\GUILayer.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="gl\Shader.h" />
     <ClInclude Include="gl\GLBuffer.h" />
     <ClInclude Include="gl\Framebuffer.h" />
+    <ClInclude Include="gl\FullscreenQuad.h" />
     <ClInclude Include="sim\ISimulation.h" />
     <ClInclude Include="sim\ComputeSimulation.h" />
     <ClInclude Include="sim\SimulationManager.h" />

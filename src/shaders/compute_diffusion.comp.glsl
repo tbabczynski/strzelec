@@ -2,28 +2,24 @@
 
 layout (local_size_x = 16, local_size_y = 16) in;
 
-layout (std430, binding = 0) buffer StateBuffer
-{
-    float state[];
-};
+layout (binding = 0, rgba32f) uniform readonly image2D srcImage;
+layout (binding = 1, rgba32f) uniform writeonly image2D dstImage;
 
 uniform float uTimeStep;
-uniform int uFrame;
-
-// Fixed simulation dimensions (can be passed as uniform if needed)
-const ivec2 dims = ivec2(256, 256);
+uniform int uWidth;
+uniform int uHeight;
 
 void main()
 {
     ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
     
-    if (gid.x >= dims.x || gid.y >= dims.y)
+    if (gid.x >= uWidth || gid.y >= uHeight)
         return;
-
-    int idx = gid.y * dims.x + gid.x;
     
-    // Simple diffusion/relaxation on red channel
-    float center = state[idx];
+    // Load center pixel (red channel contains the value)
+    vec4 centerColor = imageLoad(srcImage, gid);
+    float center = centerColor.r;
+    
     float sum = 0.0;
     int count = 0;
 
@@ -38,10 +34,10 @@ void main()
             ivec2 neighbor = gid + ivec2(dx, dy);
             
             // Clamp to boundaries
-            neighbor = clamp(neighbor, ivec2(0), dims - ivec2(1));
+            neighbor = clamp(neighbor, ivec2(0), ivec2(uWidth - 1, uHeight - 1));
             
-            int nidx = neighbor.y * dims.x + neighbor.x;
-            sum += state[nidx];
+            vec4 neighborColor = imageLoad(srcImage, neighbor);
+            sum += neighborColor.r;
             count++;
         }
     }
@@ -52,6 +48,7 @@ void main()
     float diffusionRate = uTimeStep * 0.5;
     float newValue = mix(center, avg, diffusionRate);
     
-    // Write back (use barrier if reading/writing in multiple passes)
-    state[idx] = newValue;
+    // Write to destination image (red channel, keep other channels)
+    vec4 outputColor = vec4(newValue, centerColor.g, centerColor.b, centerColor.a);
+    imageStore(dstImage, gid, outputColor);
 }

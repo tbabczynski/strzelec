@@ -4,7 +4,6 @@
 #include <memory>
 
 class Shader;
-class GLBuffer;
 
 class ComputeSimulation : public ISimulation
 {
@@ -20,9 +19,18 @@ public:
     float GetTimeStep() const override { return m_TimeStep; }
     void SetTimeStep(float dt) override { m_TimeStep = dt; }
 
+    unsigned int GetTexture() const { return m_TexA; }
+
 private:
+    void CreateTextures(int width, int height);
+    void DestroyTextures();
+
     std::unique_ptr<Shader> m_ComputeShader;
-    std::unique_ptr<GLBuffer> m_StateBuffer;
+
+    unsigned int m_TexA;
+    unsigned int m_TexB;
+    unsigned int m_SrcTex;
+    unsigned int m_DstTex;
 
     int m_Width;
     int m_Height;
