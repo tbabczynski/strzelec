@@ -48,7 +48,7 @@ void SimulationManager::ResizeAll(int width, int height)
 
 ISimulation* SimulationManager::GetActiveSimulation() const
 {
-    if (m_ActiveSimulationIndex >= 0 && m_ActiveSimulationIndex < m_Simulations.size())
+    if (m_ActiveSimulationIndex >= 0 && static_cast<size_t>(m_ActiveSimulationIndex) < m_Simulations.size())
     {
         return m_Simulations[m_ActiveSimulationIndex].get();
     }
@@ -57,7 +57,7 @@ ISimulation* SimulationManager::GetActiveSimulation() const
 
 void SimulationManager::SetActiveSimulation(int index)
 {
-    if (index >= 0 && index < m_Simulations.size())
+    if (index >= 0 && static_cast<size_t>(index) < m_Simulations.size())
     {
         m_ActiveSimulationIndex = index;
     }

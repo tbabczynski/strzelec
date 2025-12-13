@@ -27,7 +27,7 @@ void main()
     float sum = 0.0;
     int count = 0;
 
-    // Sample neighbors (von Neumann neighborhood)
+    // Sample neighbors (Moore neighborhood - 8-connected)
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)
