@@ -98,7 +98,11 @@
     <ClCompile Include="gl\GLBuffer.cpp" />
     <ClCompile Include="gl\Framebuffer.cpp" />
     <ClCompile Include="sim\ComputeSimulation.cpp" />
+    <ClCompile Include="sim\ComputeRenderer.cpp" />
+    <ClCompile Include="sim\ComputeControlPanel.cpp" />
     <ClCompile Include="sim\ProjectileSimulation.cpp" />
+    <ClCompile Include="sim\ProjectileRenderer.cpp" />
+    <ClCompile Include="sim\ProjectileControlPanel.cpp" />
     <ClCompile Include="sim\SimulationManager.cpp" />
     <ClCompile Include="gui\GUILayer.cpp" />
   </ItemGroup>
@@ -109,8 +113,16 @@
     <ClInclude Include="gl\GLBuffer.h" />
     <ClInclude Include="gl\Framebuffer.h" />
     <ClInclude Include="sim\ISimulation.h" />
+    <ClInclude Include="sim\IRenderer.h" />
+    <ClInclude Include="sim\IControlPanel.h" />
+    <ClInclude Include="sim\SimulationModule.h" />
+    <ClInclude Include="sim\ModuleRegistry.h" />
     <ClInclude Include="sim\ComputeSimulation.h" />
+    <ClInclude Include="sim\ComputeRenderer.h" />
+    <ClInclude Include="sim\ComputeControlPanel.h" />
     <ClInclude Include="sim\ProjectileSimulation.h" />
+    <ClInclude Include="sim\ProjectileRenderer.h" />
+    <ClInclude Include="sim\ProjectileControlPanel.h" />
     <ClInclude Include="sim\SimulationManager.h" />
     <ClInclude Include="gui\GUILayer.h" />
   </ItemGroup>

@@ -7,6 +7,12 @@
     <ClCompile Include="sim\ComputeSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sim\ComputeRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sim\ComputeControlPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="gl\Framebuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,6 +37,12 @@
     <ClCompile Include="sim\ProjectileSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sim\ProjectileRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sim\ProjectileControlPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -39,7 +51,19 @@
     <ClInclude Include="sim\ComputeSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sim\ComputeRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\ComputeControlPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="sim\ProjectileSimulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\ProjectileRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\ProjectileControlPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl\Framebuffer.h">
@@ -52,6 +76,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sim\ISimulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\IRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\IControlPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\SimulationModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sim\ModuleRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl\Shader.h">
