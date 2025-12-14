@@ -1,14 +1,11 @@
 #include "GUILayer.h"
 #include "../sim/SimulationManager.h"
-#include "../sim/ISimulation.h"
-#include "../sim/ProjectileSimulation.h"
+#include "../sim/IControlPanel.h"
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
-#include "glm/vec2.hpp"
 
 GUILayer::GUILayer()
     : m_Window(nullptr)
@@ -71,121 +68,11 @@ void GUILayer::Render(SimulationManager* simManager)
 
     if (simManager)
     {
-        ISimulation* activeSim = simManager->GetActiveSimulation();
+        IControlPanel* activeControlPanel = simManager->GetActiveControlPanel();
         
-        // Try to cast to ProjectileSimulation
-        ProjectileSimulation* projectileSim = dynamic_cast<ProjectileSimulation*>(activeSim);
-        
-        if (projectileSim)
+        if (activeControlPanel)
         {
-            ImGui::Text("Projectile (Archery) Simulation");
-            ImGui::Separator();
-
-            // Launch parameters
-            ImGui::Text("Launch Parameters:");
-            float speed = projectileSim->GetInitialSpeed();
-            float angle = projectileSim->GetInitialAngle();
-            if (ImGui::SliderFloat("Speed (m/s)", &speed, 10.0f, 100.0f))
-                projectileSim->SetInitialSpeed(speed);
-            if (ImGui::SliderFloat("Angle (deg)", &angle, 0.0f, 90.0f))
-                projectileSim->SetInitialAngle(angle);
-
-            // Target configuration
-            ImGui::Spacing();
-            ImGui::Text("Target Configuration:");
-            glm::vec2 targetPos = projectileSim->GetTargetPosition();
-            float targetRadius = projectileSim->GetTargetRadius();
-            if (ImGui::InputFloat("Target X (m)", &targetPos.x) ||
-                ImGui::InputFloat("Target Y (m)", &targetPos.y) ||
-                ImGui::SliderFloat("Target Radius (m)", &targetRadius, 0.1f, 2.0f))
-            {
-                projectileSim->SetTarget(targetPos, targetRadius);
-            }
-
-            // Wind configuration
-            ImGui::Spacing();
-            ImGui::Text("Wind Configuration:");
-            glm::vec2 wind = projectileSim->GetWind();
-            if (ImGui::SliderFloat("Wind X (m/s)", &wind.x, -100.0f, 100.0f) ||
-                ImGui::SliderFloat("Wind Y (m/s)", &wind.y, -100.0f, 100.0f))
-            {
-                projectileSim->SetWind(wind);
-            }
-
-            // Control buttons
-            ImGui::Spacing();
-            ImGui::Separator();
-            if (ImGui::Button("Launch", ImVec2(100, 30)))
-            {
-                projectileSim->Launch(speed, angle);
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Reset", ImVec2(100, 30)))
-            {
-                projectileSim->Reset();
-            }
-
-            // Pause/Step controls
-            ImGui::Spacing();
-            bool paused = projectileSim->GetPaused();
-            if (ImGui::Checkbox("Paused", &paused))
-            {
-                projectileSim->SetPaused(paused);
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Step"))
-            {
-                projectileSim->RequestStep();
-            }
-
-            // Trajectory toggle
-            bool showTrajectory = projectileSim->GetShowTrajectory();
-            if (ImGui::Checkbox("Show Trajectory", &showTrajectory))
-            {
-                projectileSim->SetShowTrajectory(showTrajectory);
-            }
-
-            // Status display
-            ImGui::Spacing();
-            ImGui::Separator();
-            ImGui::Text("Status:");
-            if (projectileSim->IsFlying())
-            {
-                ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Flying");
-                ImGui::Text("Flight time: %.2f s", projectileSim->GetSimTime());
-            }
-            else if (projectileSim->HasHit())
-            {
-                ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "HIT TARGET!");
-                ImGui::Text("Flight time: %.2f s", projectileSim->GetSimTime());
-            }
-            else
-            {
-                ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Ready");
-            }
-
-            glm::vec2 pos = projectileSim->GetPosition();
-            glm::vec2 vel = projectileSim->GetVelocity();
-            ImGui::Text("Position: (%.2f, %.2f) m", pos.x, pos.y);
-            ImGui::Text("Velocity: (%.2f, %.2f) m/s", vel.x, vel.y);
-            ImGui::Text("Speed: %.2f m/s", glm::length(vel));
-        }
-        else if (activeSim)
-        {
-            // Fallback for other simulation types
-            ImGui::Text("Compute Simulation Parameters");
-            ImGui::Separator();
-
-            float timeStep = activeSim->GetTimeStep();
-            if (ImGui::VSliderFloat("##TimeStep", ImVec2(40, 160), &timeStep, 0.001f, 0.1f, "%.3f"))
-            {
-                activeSim->SetTimeStep(timeStep);
-            }
-            ImGui::SameLine();
-            ImGui::Text("Time Step");
-
-            ImGui::Spacing();
-            ImGui::Text("Current timestep: %.4f", timeStep);
+            activeControlPanel->RenderControls();
         }
         else
         {

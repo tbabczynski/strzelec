@@ -19,7 +19,6 @@ private:
     void Shutdown();
     void Update();
     void Render();
-    void RenderProjectileScene();
     void InitRenderingResources();
     void CleanupRenderingResources();
 
