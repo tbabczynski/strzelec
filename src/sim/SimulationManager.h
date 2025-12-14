@@ -32,9 +32,6 @@ public:
 private:
     void RegisterModules();
 
-    std::unique_ptr<ModuleRegistry> m_Registry;
-    std::vector<std::unique_ptr<SimulationModule>> m_Modules;
-    std::vector<std::string> m_ModuleNames;
     int m_ActiveSimulationIndex;
     
     // Resources needed for module creation
@@ -42,4 +39,8 @@ private:
     unsigned int m_VAO;
     unsigned int m_VBO;
     unsigned int m_ShaderProgram;
+    
+    std::unique_ptr<ModuleRegistry> m_Registry;
+    std::vector<std::unique_ptr<SimulationModule>> m_Modules;
+    std::vector<std::string> m_ModuleNames;
 };
